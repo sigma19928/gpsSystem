@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Sign-Up/Login Form</title>
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <link rel="stylesheet" href="stylesheets/normalize.css">
+
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src ='javascripts/ajax.js'></script>
+    
+    
+    
+  </head>
+
+  <body>
+
+    <div class="form">
+      
+      <ul class="tab-group">
+        <li class="tab active"><a href="#signup">Регистрация</a></li>
+        <li class="tab"><a href="#login">Войти</a></li>
+      </ul>
+      
+      <div class="tab-content">
+        <div id="signup">   
+          <h1>Регистрация</h1>
+          
+          <form id="regform" action="/signup" method="post">
+          
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                Имя<span class="req">*</span>
+              </label>
+              <input name="firstn" type="text" required autocomplete="off" />
+            </div>
+        
+            <div class="field-wrap">
+              <label>
+                Фамилия<span class="req">*</span>
+              </label>
+              <input name="lastn" type="text"required autocomplete="off"/>
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Email адрес<span class="req">*</span>
+            </label>
+            <input name="email" type="email"required autocomplete="off"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              Новый пароль<span class="req">*</span>
+            </label>
+            <input name="passwd" type="password"required autocomplete="off"/>
+          </div>
+          
+          <button id ="sigbut" type="submit" class="button button-block"/>Зарегистрироваться</button>
+          
+          </form>
+
+        </div>
+        
+        <div id="login">   
+          <h1>Войти</h1>
+          
+          <form id="loginform" action="/signin"]]] method="post">
+          <input type="hidden" name="hidtext">
+            <div class="field-wrap">
+            <label>
+              Email адрес<span class="req">*</span>
+            </label>
+            <input name="semail" type="email"required autocomplete="off"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              Пароль<span class="req">*</span>
+            </label>
+            <input name="spasswd" type="password"required autocomplete="off"/>
+          </div>
+          
+          <!--<p class="forgot"><a href="#">Забыли пароль?</a></p>-->
+          
+          <button class="button button-block"/>Войти</button>
+          
+          </form>
+
+        </div>
+        
+      </div>
+      
+</div>
+
+        <script src="javascripts/index.js"></script>
+
+
+    <style>
+
+      body {
+        background: url(images/020.png) no-repeat;
+        -moz-background-size: 100%; /* Firefox 3.6+ */
+        -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+        -o-background-size: 100%; /* Opera 9.6+ */
+        background-size: 100%; /* Современные браузеры */
+      }
+    </style>
+    
+  </body>
+</html>

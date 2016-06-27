@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>GPS SYSTEM</title>
+    <h1><center>GPS PROTOTYPE</center></h1>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script  type="text/javascript">
+
+        ymaps.ready(initMap);
+        var myMap,
+            myPlacemark;
+        var socket = io.connect('http://localhost:8000');
+
+            socket.on('take', function (options) {
+                   // console.log('location:'+options);
+                    updateMap(options);
+
+                });
+
+
+        function initMap(){
+
+            myMap = new ymaps.Map("map", {
+                center: [43.25, 76.95],
+                zoom: 10
+            });
+        };
+
+        function updateMap(options){
+
+            myMap.geoObjects.remove(myPlacemark);
+
+            myPlacemark = new ymaps.Placemark(options, {
+                hintContent: 'Место положение',
+                balloonContent: 'Текущее место положение'
+            });
+
+
+            myMap.geoObjects.add(myPlacemark);
+        }
+    </script>
+</head>
+<body>
+    <form action="/">
+        <button type="submit">Выход</button>
+    </form>
+    <div style="display: table; margin: 0 auto; text-align: right;">
+    <div  id="map" style="width: 600px; height: 400px"></div>
+    </div>
+</body>
+
+</html>

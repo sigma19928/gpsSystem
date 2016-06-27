@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GPS SYSTEM</title>
+
+  <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/css/sidebar.css">
+	<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script  type="text/javascript">
+
+		ymaps.ready(initMap);
+		var myMap,
+				myPlacemark;
+		var socket = io.connect('http://localhost:8000');
+
+		socket.on('take', function (options) {
+			// console.log('location:'+options);
+			updateMap(options);
+
+		});
+
+
+
+		function initMap(){
+
+			myMap = new ymaps.Map("map", {
+				center: [43.25, 76.95],
+				zoom: 10
+				controls:['default']
+			});
+		};
+
+		function updateMap(options){
+
+			myMap.geoObjects.remove(myPlacemark);
+
+			myPlacemark = new ymaps.Placemark(options, {
+				hintContent: 'Место положение',
+				balloonContent: 'Текущее место положение'
+			},{
+				preset:'islands#redSportIcon'
+			});
+
+
+			myMap.geoObjects.add(myPlacemark);
+		}
+	</script>
+</head>
+
+<header>
+<!--
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+	<ul class="right-navbar">
+		<li>
+		  <a href="#" class="dropdown-toogle" data-toogle="dropdown" 
+			aria-expanded="false">
+			<span>
+			  <img src="../images/no_userphoto40.png">
+			</span>
+
+			<span>
+
+			</span>
+		  </a>
+		</li>
+	</ul>
+  </nav>
+-->
+</header>
+
+<body>
+
+<nav class="navbar navbar-inverse sidebar" role="navigation" style="height: 2000px">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Главное<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+				<li ><a href="#">Устройства<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
+					<li class="dropdown">
+					<a href="#" class="dropdown-toogle" data-toggle="dropdown">Добавить <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a>
+					<ul class="dropdown-menu forAnimate" role="menu">
+
+
+					</ul>
+				</li>
+				<li>
+					<a href="/logout">Выйти<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="main">
+<!-- Content Here -->
+</div>
+<div style="display: table; margin: 0 auto;">
+	<div  id="map" style="width: 1150px; height: 590px"></div>
+</div>
+
+
+</body>
+
+</html>
