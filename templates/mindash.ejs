@@ -5,19 +5,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GPS SYSTEM</title>
+  <title>GPS PROTOTYPE</title>
 
   <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="/stylesheets/css/sidebar.css">
-	<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+	<script src="http://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 
-	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-	<script  type="text/javascript">
+	<script type="text/javascript">
+		ymaps.ready(init);
 
-		ymaps.ready(initMap);
 		var myMap,
 				myPlacemark;
-		var socket = io.connect('http://localhost:8000');
+		var socket = io.connect('http://192.168.1.3:8000');
 
 		socket.on('take', function (options) {
 			// console.log('location:'+options);
@@ -25,28 +25,34 @@
 
 		});
 
-
-
-		function initMap(){
-
+		function init(){
 			myMap = new ymaps.Map("map", {
 				center: [43.25, 76.95],
 				zoom: 10
-				controls:['default']
 			});
-		};
+
+			//myMap.behaviors.disable('scrollZoom');
+
+			//myMap.controls.add("zoomControl", {
+			//	position: {top: 15, left: 15}
+			// 	});
+		}
 
 		function updateMap(options){
-
 			myMap.geoObjects.remove(myPlacemark);
 
 			myPlacemark = new ymaps.Placemark(options, {
-				hintContent: 'Место положение',
-				balloonContent: 'Текущее место положение'
-			},{
-				preset:'islands#redSportIcon'
-			});
+				hintContent: 'Собственный значок метки',
+				balloonContent: 'Это красивая метка'
+			}, {
+				iconLayout: 'default#image',
 
+				iconImageHref: '/images/boy.gif',
+
+				iconImageSize: [30, 42],
+
+				iconImageOffset: [-3, -42]
+			});
 
 			myMap.geoObjects.add(myPlacemark);
 		}
@@ -54,7 +60,7 @@
 </head>
 
 <header>
-<!--
+
   <nav class="navbar navbar-inverse navbar-fixed-top">
 	<ul class="right-navbar">
 		<li>
@@ -64,20 +70,18 @@
 			  <img src="../images/no_userphoto40.png">
 			</span>
 
-			<span>
 
-			</span>
 		  </a>
 		</li>
 	</ul>
   </nav>
--->
+
 </header>
 
 <body>
 
-<nav class="navbar navbar-inverse sidebar" role="navigation" style="height: 2000px">
-	<div class="container-fluid">
+<nav class="navbar navbar-inverse sidebar" role="navigation">
+    <div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
@@ -86,23 +90,17 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
+			<a class="navbar-brand" href="#">Dashboard</a>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Главное<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+				<li class="active"><a href="/map">Главное<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
 				<li ><a href="#">Устройства<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
-					<li class="dropdown">
-					<a href="#" class="dropdown-toogle" data-toggle="dropdown">Добавить <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a>
-					<ul class="dropdown-menu forAnimate" role="menu">
-
-
-					</ul>
-				</li>
 				<li>
 					<a href="/logout">Выйти<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a>
 				</li>
-
+	
 			</ul>
 		</div>
 	</div>
@@ -110,11 +108,23 @@
 <div class="main">
 <!-- Content Here -->
 </div>
-<div style="display: table; margin: 50 auto;">
-	<div  id="map" style="width: 1150px; height: 590px"></div>
-</div>
+<style>
+	#map{
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		width: 85%;
+		height: 92%;
+	}
+	@media (max-width: 640px) {
 
-
+		#map {
+			width:100%;
+			height: 100%;
+		}
+	}
+</style>
+<div  id="map"></div>
 </body>
 
 </html>

@@ -62,7 +62,7 @@ app.get('/',function(req,res){
 
 app.get('/map',function(req,res){
   if(req.session.isAuth) {
-    res.render('dash.ejs');
+    res.render('mindash.ejs');
   }else{
     res.redirect('/');
   }
