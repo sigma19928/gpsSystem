@@ -13,17 +13,24 @@
 	<script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 
 	<script type="text/javascript">
-		ymaps.ready(init);
-
 		var myMap,
 				myPlacemark;
-		var socket = io.connect('http://192.168.1.3:8000');
 
-		socket.on('take', function (options) {
-			// console.log('location:'+options);
-			updateMap(options);
+		window.onload=function () {
+			ymaps.ready(init);
 
-		});
+			var socket = io.connect('http://localhost:8000');
+			var userID = document.getElementById("userid").value;
+			socket.emit('userCon',{userid:userID})
+			//alert(userID)
+			socket.on('take', function (options) {
+				console.log('location:'+options);
+				updateMap(options);
+
+			});
+		}
+
+
 
 		function init(){
 			myMap = new ymaps.Map("map", {
@@ -44,9 +51,9 @@
 			myPlacemark = new ymaps.Placemark(options, {
 				hintContent: 'Собственный значок метки',
 				balloonContent: 'Это красивая метка'
-			}, {
+			},
+			{
 				iconLayout: 'default#image',
-
 				iconImageHref: '/images/boy.gif',
 
 				iconImageSize: [30, 42],
@@ -73,13 +80,11 @@
 
 		  </a>
 		</li>
-	</ul>
-  </nav>
 
 </header>
 
 <body>
-
+<input type="hidden" id="userid" value="<%=userid%>">
 <nav class="navbar navbar-inverse sidebar" role="navigation">
     <div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -96,7 +101,7 @@
 		<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="/map">Главное<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-				<li ><a href="#">Устройства<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
+				<li ><a href="/mydevices">Устройства<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
 				<li>
 					<a href="/logout">Выйти<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a>
 				</li>

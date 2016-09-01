@@ -51,3 +51,33 @@ exports.selectUser = function(email,cb){
     });
 };
 
+exports.clientDevices = function(userid,cb){
+    var text = 'SELECT c.id, c.email, g.id, s."clientId", s."deviceId"  FROM clients c' +
+        ' JOIN clientrealdevices s' +
+        ' ON c.id=s."clientId"' +
+        ' JOIN gps_devices g' +
+        ' ON s."deviceId"=g.id' +
+        ' WHERE c.id='+userid;
+        console.log(text);
+    client.query(text,function(err,result){
+        if(err){
+            console.error(err)
+            cb(err);
+        } else{
+            cb(null,result.rows)
+        }
+    })
+};
+
+exports.getUsersByDeviceId = function(deviceid,cb){
+    var text = 'SELECT clientid FROM clientrealdevices c WHERE c.deviceid=$1'
+    client.query(text,[deviceid],function(err,result){
+        if(err){
+            console.error(err)
+            cb(err);
+        } else{
+            console.log("getUsersByDeviceId=>", result.rows)
+            cb(null,result.rows)
+        }
+    })
+}
