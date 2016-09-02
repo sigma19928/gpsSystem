@@ -2,134 +2,94 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GPS PROTOTYPE</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GPS PROTOTYPE</title>
 
-  <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/stylesheets/css/sidebar.css">
-	<script src="http://cdn.socket.io/socket.io-1.4.5.js"></script>
-	<script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="http://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
 
-	<script type="text/javascript">
-		var myMap,
-				myPlacemark;
-
-		window.onload=function () {
-			ymaps.ready(init);
-
-			var socket = io.connect('http://localhost:8000');
-			var userID = document.getElementById("userid").value;
-			socket.emit('userCon',{userid:userID})
-			//alert(userID)
-			socket.on('take', function (options) {
-				console.log('location:'+options);
-				updateMap(options);
-
-			});
-		}
-
-
-
-		function init(){
-			myMap = new ymaps.Map("map", {
-				center: [43.25, 76.95],
-				zoom: 10
-			});
-
-			//myMap.behaviors.disable('scrollZoom');
-
-			//myMap.controls.add("zoomControl", {
-			//	position: {top: 15, left: 15}
-			// 	});
-		}
-
-		function updateMap(options){
-			myMap.geoObjects.remove(myPlacemark);
-
-			myPlacemark = new ymaps.Placemark(options, {
-				hintContent: 'Собственный значок метки',
-				balloonContent: 'Это красивая метка'
-			},
-			{
-				iconLayout: 'default#image',
-				iconImageHref: '/images/boy.gif',
-
-				iconImageSize: [30, 42],
-
-				iconImageOffset: [-3, -42]
-			});
-
-			myMap.geoObjects.add(myPlacemark);
-		}
-	</script>
 </head>
 
-<header>
-
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-	<ul class="right-navbar">
-		<li>
-		  <a href="#" class="dropdown-toogle" data-toogle="dropdown" 
-			aria-expanded="false">
-			<span>
-			  <img src="../images/no_userphoto40.png">
-			</span>
-
-
-		  </a>
-		</li>
-
-</header>
-
 <body>
-<input type="hidden" id="userid" value="<%=userid%>">
-<nav class="navbar navbar-inverse sidebar" role="navigation">
-    <div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">Dashboard</a>
-		</div>
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="/map">Главное<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-				<li ><a href="/mydevices">Устройства<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
-				<li>
-					<a href="/logout">Выйти<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a>
-				</li>
-	
-			</ul>
-		</div>
-	</div>
-</nav>
-<div class="main">
-<!-- Content Here -->
+<div id="hidden_toggle">
+    <a href="#" id="sidebar-toggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </a>
 </div>
-<style>
-	#map{
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		width: 85%;
-		height: 92%;
-	}
-	@media (max-width: 640px) {
 
-		#map {
-			width:100%;
-			height: 100%;
-		}
-	}
-</style>
-<div  id="map"></div>
+<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6" id="bar">
+    <div class="row" id="man">
+        <img src="images/man_icon.svg" style="width: 80%">
+    </div>
+    <div class="row" id="device">
+        <img src="images/text1.svg" style="width: 50%">
+        <img src="images/1.svg" style="width: 15%;padding-left: 5px">
+    </div>
+    <div class="row" id="main">
+        <img src="images/text2.svg" style="width: 40%">
+        <img src="images/2.svg" style="width: 12%;padding-left: 5px">
+    </div>
+    <div class="row" id="logout">
+        <img src="images/text3.svg" style="width: 30%">
+        <img src="images/3.svg" style="width: 15%;padding-left: 5px">
+    </div>
+</div>
+<div class="col-lg-10 col-md-10 col-sm-9" style="height: 100%" id="map_div">
+    <div id="map"></div>
+    <div id="device_div" ng-app="app" class="container-fluid" ng-controller="appController">
+        <div class="form">
+            <h1>Устройства</h1>
+
+            <div class="field-wrap">
+
+                <input type="text" ng-model="id" required placeholder="ID"/>
+            </div>
+            <div class="field-wrap">
+                <input type="text" ng-model="name" required placeholder="Названия"/>
+            </div>
+            <button ng-click="Add()" type="submit" class="button button-block"/>
+            Добавить</button>
+
+            <div class="field-wrap" style="padding-top: 40px">
+                <table class="table">
+                    <tr>
+                        <td >
+                            <b>ID</b>
+                        </td>
+                        <td>
+                            <b>Названия</b>
+                        </td>
+                    </tr>
+                    <tbody ng-repeat="device in devices">
+                    <tr>
+                        <td >
+                            {{device.id}}
+                        </td>
+                        <td>
+                            {{device.name}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="userid" value="<%= userid %>">
+
+
 </body>
 
 </html>
+

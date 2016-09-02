@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GPS PROTOTYPE</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+</head>
+
+<body >
+<div ng-app="app" class="container-fluid" ng-controller="appController">
+    <div class="form">
+        <h1>Устройства</h1>
+
+        <div class="field-wrap">
+
+            <input type="text" ng-model="id" required placeholder="ID"/>
+        </div>
+        <div class="field-wrap">
+            <input type="text" ng-model="name" required placeholder="Названия"/>
+        </div>
+        <button ng-click="Add()" type="submit" class="button button-block"/>
+        Добавить</button>
+
+        <div class="field-wrap" style="padding-top: 40px">
+            <table class="table" style="border: 2px solid white;color: white">
+                <tr>
+                    <td >
+                       <b>ID</b>
+                    </td>
+                    <td>
+                       <b>Названия</b>
+                    </td>
+                </tr>
+                <tbody ng-repeat="device in devices">
+                <tr>
+                    <td >
+                        {{device.id}}
+                    </td>
+                    <td>
+                        {{device.name}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+<style>
+
+
+</style>
+<script>
+
+</script>
+</html>

@@ -112,13 +112,14 @@ app.get('/map', function (req, res) {
 
 app.get('/mydevices', function (req, res) {
     if (req.session.isAuth) {
-        dataBase.clientDevices(req.session.user.id, function (err, data) {
+        res.render('device.ejs');
+        /*dataBase.clientDevices(req.session.user.id, function (err, data) {
             if (err) {
                 return res.send(err);
             } else {
-                res.send(data);
+               res.send(data);
             }
-        });
+        });*/
     } else {
         res.render('error.ejs')
     }
