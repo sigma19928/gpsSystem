@@ -16,29 +16,26 @@ window.onload = function () {
         console.log('location:' + options);
         updateMap(options);
 
+
     });
-}
+};
 
 
 function init() {
     myMap = new ymaps.Map("map", {
         center: [43.25, 76.95],
-        zoom: 10
-    });
+        zoom: 10,
+        controls:['zoomControl','typeSelector','geolocationControl']
+    },{suppressMapOpenBlock: true});
 
-    //myMap.behaviors.disable('scrollZoom');
-
-    //myMap.controls.add("zoomControl", {
-    //	position: {top: 15, left: 15}
-    // 	});
 }
 
 function updateMap(options) {
     myMap.geoObjects.remove(myPlacemark);
 
     myPlacemark = new ymaps.Placemark(options, {
-            hintContent: 'Собственный значок метки',
-            balloonContent: 'Это красивая метка'
+            hintContent: 'Ваше Устройство',
+           // balloonContent: 'Местоположение устройства'
         },
         {
             iconLayout: 'default#image',
@@ -51,6 +48,7 @@ function updateMap(options) {
 
     myMap.geoObjects.add(myPlacemark);
 }
+
 /******************************     Nav Bar  ****************************/
 $(document).ready(function () {
     var bar_hide = false;
@@ -85,6 +83,9 @@ $(document).ready(function () {
     $("#main").click(function () {
         $('#device_div').hide();
         $('#map').show();
+    });
+    $("#logout").click(function () {
+        window.location='/logout'
     });
 });
 

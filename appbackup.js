@@ -74,7 +74,7 @@ io.on('connection', function (socket) {
             });
         }
     });
-    ////////////////////
+    /////////socket.io connect///////////
     socket.on('userCon', function (userCon) {
         //socket["client"] = {
         //    id: userCon.userid
@@ -84,7 +84,7 @@ io.on('connection', function (socket) {
             socket: socket
         });
        console.log("socketCon keys after saving", socketCon)
-    })
+    });
 
     socket.on('disconnect', function () {
         console.log('user disconnected', socket.id);
@@ -109,7 +109,7 @@ app.get('/map', function (req, res) {
         res.redirect('/');
     }
 });
-
+/*
 app.get('/mydevices', function (req, res) {
     if (req.session.isAuth) {
         dataBase.clientDevices(req.session.user.id, function (err, data) {
@@ -123,7 +123,7 @@ app.get('/mydevices', function (req, res) {
         res.render('error.ejs')
     }
 });
-
+*/
 app.get('/logout', function (req, res) {
     delete req.session.isAuth;
     delete req.session.user;
